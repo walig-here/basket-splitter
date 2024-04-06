@@ -4,38 +4,56 @@ import java.util.List;
 
 public class Item {
 
-    Item(String name, List<String> deliveryMethodsNames)
+    Item(String name, List<DeliveryMethod> deliveryMethods)
     {
-        // TODO: 06.04.2024
-        throw new UnsupportedOperationException();
+        this.name = name;
+        this.currentDeliveryMethod = null;
+        this.possibleDeliveryMethods = deliveryMethods;
     }
 
-    void setCurrentDeliveryMethod(DeliveryMethod method)
+    void chooseDeliveryMethod(DeliveryMethod method)
     {
-        // TODO: 06.04.2024  
-        throw new UnsupportedOperationException();
+        // method should be suitable for that instance of item and item could be assigned only once
+        if (this.currentDeliveryMethod != null || !this.canBeDeliveredWith(method))
+            return;
+
+        this.currentDeliveryMethod = method;
+        this.currentDeliveryMethod.assignItem(this);
+
+        for (DeliveryMethod possibleMethod : this.possibleDeliveryMethods)
+            if(!possibleMethod.equals(this.currentDeliveryMethod))
+                possibleMethod.decrementNumberOfMatchingItemsInBasket();
+    }
+
+    DeliveryMethod getCurrentDeliveryMethod()
+    {
+        return this.currentDeliveryMethod;
     }
 
     String getName()
     {
-        // TODO: 06.04.2024  
-        throw new UnsupportedOperationException();
+        return this.name;
+    }
+
+    List<DeliveryMethod> getPossibleDeliveryMethods()
+    {
+        return this.possibleDeliveryMethods;
     }
 
     @Override
     public boolean equals(Object obj)
     {
-        // TODO: 06.04.2024
-        throw new UnsupportedOperationException();
+        if (obj instanceof Item)
+            return this.name.equals(((Item) obj).name);
+        return false;
     }
     
-    private boolean canBeDeliveredWith(DeliveryMethod method)
+    boolean canBeDeliveredWith(DeliveryMethod method)
     {
-        // TODO: 06.04.2024  
-        throw new UnsupportedOperationException();
+        return this.possibleDeliveryMethods.contains(method);
     }
 
-    private List<String> possibleDeliveryMethodsNames;
+    private List<DeliveryMethod> possibleDeliveryMethods;
     private String name;
     private DeliveryMethod currentDeliveryMethod;
 }
