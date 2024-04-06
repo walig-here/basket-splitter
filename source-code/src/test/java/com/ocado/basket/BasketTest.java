@@ -26,7 +26,7 @@ public class BasketTest {
         DeliveryMethod mailboxDelivery = new DeliveryMethod("Mailbox delivery");
         DeliveryMethod nextDayShipping = new DeliveryMethod("Next day shipping");
 
-        List<Item> itemsNames = new ArrayList<>(Arrays.asList(
+        List<Item> items = new ArrayList<>(Arrays.asList(
                 new Item("Cookies Oatmeal Raisin", Arrays.asList(pickUpPoint, parcelLocker)),
                 new Item("Sole - Dover, Whole, Fresh", Arrays.asList(inStorePickUp)),
                 new Item("Chocolate - Unsweetened", Arrays.asList(inStorePickUp, parcelLocker, sameDayDelivery, pickUpPoint, courier, expressCollection, mailboxDelivery, nextDayShipping))
@@ -40,18 +40,18 @@ public class BasketTest {
         try {
             Basket basket = new Basket(
                     Arrays.asList(
-                            itemsNames.get(0).getName(),
-                            itemsNames.get(1).getName(),
-                            itemsNames.get(2).getName()
+                            items.get(0).getName(),
+                            items.get(1).getName(),
+                            items.get(2).getName()
                     ),
                     configFile.getAbsolutePath()
             );
 
             assertEquals(
                     "Not enough items in basket!",
-                    basket.getItemsFromBasket().size(), itemsNames.size()
+                    basket.getItemsFromBasket().size(), items.size()
             );
-            for (Item item : itemsNames)
+            for (Item item : items)
             {
                 int itemIndex = basket.getItemsFromBasket().indexOf(item);
                 assertNotEquals(

@@ -45,18 +45,7 @@ public class BasketSplitterTest
         try {
             BasketSplitter basketSplitter = new BasketSplitter(this.getPathToConfigFile());
             Map<String, List<String>> solution = basketSplitter.split(itemsNames);
-            for (Map.Entry<String, List<String>> optimalSolutionEntry : optimalSolution.entrySet())
-            {
-                assertTrue(
-                        "Solution lack key " + optimalSolutionEntry.getKey(),
-                        solution.containsKey(optimalSolutionEntry.getKey())
-                );
-                assertEquals(
-                        "Key " + optimalSolutionEntry.getKey() + " has invalid value",
-                        solution.get(optimalSolutionEntry.getKey()),
-                        optimalSolutionEntry.getValue()
-                );
-            }
+            assertEquals(optimalSolution, solution);
         } catch (IOException e) {
             fail("Loading of configuration file failed!");
         }
@@ -105,19 +94,7 @@ public class BasketSplitterTest
         try {
             BasketSplitter basketSplitter = new BasketSplitter(this.getPathToConfigFile());
             Map<String, List<String>> solution = basketSplitter.split(itemsNames);
-
-            for (Map.Entry<String, List<String>> optimalSolutionEntry : optimalSolution.entrySet())
-            {
-                assertTrue(
-                        "Solution lack key " + optimalSolutionEntry.getKey(),
-                        solution.containsKey(optimalSolutionEntry.getKey())
-                );
-                assertEquals(
-                        "Key " + optimalSolutionEntry.getKey() + " has invalid value",
-                        solution.get(optimalSolutionEntry.getKey()),
-                        optimalSolutionEntry.getValue()
-                );
-            }
+            assertEquals(optimalSolution, solution);
         } catch (IOException e) {
             fail("Loading of configuration file failed!");
         }
