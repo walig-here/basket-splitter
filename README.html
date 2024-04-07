@@ -1,0 +1,92 @@
+<h1 id="dawid_waligórski_java_wrocław">Dawid_Waligórski_Java_Wrocław</h1>
+<p>Java library that solves optimization problems by splitting items from a customer&#39;s order among multiple delivery methods. The project was commissioned by <em>Ocado</em> as a recruitment task.</p>
+<h2 id="analysys">Analysys</h2>
+<h3 id="problem-description">Problem description</h3>
+<p>Each product in the shop&#39;s offer requires different delivery methods. Thus it&#39;s crucial to find an algorithm that would analyse each customer&#39;s order and assign its elements to their proper delivery methods. What&#39;s more, it needs to be done as optimally. Order <strong>elements should be split among as few delivery methods as possible</strong>. Additionally, <strong>number of items assigned to the method with the maximal amount of assignments should be as big as possible</strong>.</p>
+<h3 id="input-data">Input data</h3>
+<ol>
+<li>Customer&#39;s order (basket) in the form of items&#39; names list. Example basket form:</li>
+</ol>
+<pre><code class="language-json">[ &quot;product-name-1&quot;, &quot;product-name-2&quot;, &quot;product-name-3&quot; ]
+</code></pre>
+<ol start="2">
+<li>Configuration file in JSON format that contains a list of all products in the shop&#39;s offer and defines lists of names of their proper delivery methods. Implemented <strong>library would require an absolute path to this file</strong>. Example configuration file contents:</li>
+</ol>
+<pre><code class="language-json">{
+  &quot;product-name-1&quot;: [ &quot;delivery-method-1&quot;, &quot;delivery-method-2&quot; ],
+  &quot;product-name-2&quot;: [ &quot;delivery-method-1&quot; ],
+  &quot;product-name-3&quot;: [ &quot;delivery-method-2&quot; ],
+  &quot;product-name-4&quot;: [ &quot;delivery-method-1&quot;, &quot;delivery-method-3&quot; ]
+}
+</code></pre>
+<h3 id="required-output">Required output</h3>
+<p>A map that would represent the assignment of the order&#39;s products between delivery methods. <strong>Delivery method name should be a key</strong> and <strong>list of products&#39; names assigned to it should be a value</strong>. Example output:</p>
+<pre><code class="language-json">{
+  &quot;delivery-method-1&quot;: [ &quot;product-name-1&quot;, &quot;product-name-2&quot; ],
+  &quot;delivery-method-2&quot;: [ &quot;product-name-3&quot; ]  
+}
+</code></pre>
+<h3 id="constraints">Constraints</h3>
+<ul>
+<li>Shop&#39;s offer would contain at most 1000 products</li>
+<li>There would be at most 10 different delivery methods</li>
+<li>Customer&#39;s basket would contain at most 100 different products</li>
+</ul>
+<h2 id="implementation--tests">Implementation &amp; Tests</h2>
+<h3 id="implementation-details-and-structure">Implementation details and structure</h3>
+<p>This library is a <em>Maven</em> project implemented with <em>Java 17</em> which was enriched by an external <a href="https://github.com/FasterXML/jackson"><em>Jackson</em></a> library (for easier parsing of JSON files). The source code is available in the directory <code>source-code\src\main\java</code>. The class structure of the implemented library is shown in the figure below.</p>
+<p><img src="./gfx/splitter.png" alt=""></p>
+<h3 id="tests">Tests</h3>
+<p>Most non-private methods of implemented classes were tested with <em>JUnit 4</em>. Tests&#39; code is available in the directory <code>source-code\src\test\java</code>.</p>
+<h2 id="deployment">Deployment</h2>
+<p>This library is available as a non-executable JAR file named <code>basket-splitter.jar</code>. It already includes all required dependencies. </p>
+<h2 id="usage-example">Usage example</h2>
+<p>To use the <code>basket-splitter</code> library it&#39;s required to add <code>basket-splitter.jar</code> as a dependency to your Java project. From that point, it&#39;s possible to create instances of the <code>BasketSplitter</code> class. While creating an instance of that class it&#39;s required to pass a <code>String</code> with an absolute path to the configuration JSON file.</p>
+<pre><code class="language-java">/* ... */
+
+import com.ocado.basket.BasketSplitter;
+
+public class App 
+{
+    /* ... */
+
+    public static void main( String[] args )
+    {
+        BasketSplitter basketSplitter = new BasketSplitter(&quot;absolutePathtToConfigFile&quot;);
+    }
+
+    /* ... */
+}
+</code></pre>
+<p>With the new <code>BasketSplitter</code> instance created it&#39;s now possible to perform splitting of customer&#39;s orders with the <code>split()</code> method. As an input parameter, it takes a collection of order elements&#39; names in the form of <code>List&lt;String&gt;</code>. The method returns a <code>HashMap&lt;String, List&lt;String&gt;&gt;</code> that describes an assignment of the order&#39;s elements to delivery methods where the delivery method name is a key and the list of elements&#39; names assigned to it is a value. The <code>split()</code> method could also throw an <code>IOException</code> when loading and parsing the JSON configuration file has failed.</p>
+<pre><code class="language-java">/* ... */
+
+Map&lt;String, List&lt;String&gt;&gt; splittedBasket = basketSplitter.split(Arrays.asList(
+                &quot;Cocoa Butter&quot;,
+                &quot;Tart - Raisin And Pecan&quot;,
+                &quot;Table Cloth 54x72 White&quot;,
+                &quot;Flower - Daisies&quot;,
+                &quot;Fond - Chocolate&quot;,
+                &quot;Cookies - Englishbay Wht&quot;));
+System.out.println(splittedBasket);
+
+/* ... */
+</code></pre>
+<p>The solution (after additional formating) given by the <code>basket-splitter</code> library for this particular example is:</p>
+<pre><code>{
+  Mailbox delivery=[
+    Fond - Chocolate
+  ],
+  Courier=[
+    Cocoa Butter,
+    Tart - Raisin And Pecan,
+    Table Cloth 54x72 White,
+    Flower - Daisies,
+    Cookies - Englishbay Wht
+  ]
+}
+</code></pre>
+<h2 id="additional-resources">Additional resources</h2>
+<ul>
+<li><a href="https://github.com/walig-here/basket-splitter/tree/main">Project&#39;s <em>GitHub</em> repository</a></li>
+</ul>

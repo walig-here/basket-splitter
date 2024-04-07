@@ -112,3 +112,6 @@ The solution (after additional formating) given by the `basket-splitter` library
   ]
 }
 ```
+
+## Additional resources
+* [Project's *GitHub* repository](https://github.com/walig-here/basket-splitter/tree/main)
