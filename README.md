@@ -12,7 +12,7 @@ Each product in the shop's offer requires different delivery methods. Thus it's 
 
 1. Customer's order (basket) in the form of items' names list. Example basket form:
 
-```java
+```json
 [ "product-name-1", "product-name-2", "product-name-3" ]
 ```
 
@@ -31,7 +31,7 @@ Each product in the shop's offer requires different delivery methods. Thus it's 
 
 A map that would represent the assignment of the order's products between delivery methods. **Delivery method name should be a key** and **list of products' names assigned to it should be a value**. Example output:
 
-```java
+```json
 {
   "delivery-method-1": [ "product-name-1", "product-name-2" ],
   "delivery-method-2": [ "product-name-3" ]  
