@@ -44,12 +44,6 @@ A map that would represent the assignment of the order's products between delive
 * There would be at most 10 different delivery methods
 * Customer's basket would contain at most 100 different products
 
-### Additional requirements
+## Implementation
 
-* Library should be implemented with Java 17 or 21.
-* Good code readability.
-* The library should be at least partially tested.
-
-## Library architecture
-
-
+The library was implemented with *Java 17* enriched by an external [*Jackson*](https://github.com/FasterXML/jackson) library (for easier parsing of `JSON` files). The class structure of the implemented library is shown in figure XXX.
