@@ -100,6 +100,45 @@ public class BasketSplitterTest
         }
     }
 
+    @Test(expected = IOException.class)
+    public void split_basketWithInvalidItem() throws IOException {
+        List<String> itemsNames = Arrays.asList(
+                "Chocolate - Unsweetened",
+                "Bagel - Whole White Sesame",
+                "Juice - Ocean Spray Cranberry",
+                "Cabbage - Nappa",
+                "V8 Splash Strawberry Banana",
+                "Fudge - Chocolate Fudge",
+                "Mix - Cocktail Ice Cream",
+                "Haggis",
+                "Cookies - Englishbay Wht",
+                "Nut - Almond, Blanched, Whole",
+                "Pineapple - Canned, Rings",
+                "this-item-does-not-exist");
+
+        BasketSplitter basketSplitter = new BasketSplitter(this.getPathToConfigFile());
+        basketSplitter.split(itemsNames);
+    }
+
+    @Test(expected = IOException.class)
+    public void split_invalidConfigFile() throws IOException {
+        List<String> itemsNames = Arrays.asList(
+                "Chocolate - Unsweetened",
+                "Bagel - Whole White Sesame",
+                "Juice - Ocean Spray Cranberry",
+                "Cabbage - Nappa",
+                "V8 Splash Strawberry Banana",
+                "Fudge - Chocolate Fudge",
+                "Mix - Cocktail Ice Cream",
+                "Haggis",
+                "Cookies - Englishbay Wht",
+                "Nut - Almond, Blanched, Whole",
+                "Pineapple - Canned, Rings");
+
+        BasketSplitter basketSplitter = new BasketSplitter("invalid-path");
+        basketSplitter.split(itemsNames);
+    }
+
     private List<String> loadBasketFromJson(String basketFileName)
     {
         URL pathToBasket = getClass().getClassLoader().getResource(basketFileName);

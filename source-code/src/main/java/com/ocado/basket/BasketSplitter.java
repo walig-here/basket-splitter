@@ -1,6 +1,10 @@
 package com.ocado.basket;
 
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import com.fasterxml.jackson.databind.exc.MismatchedInputException;
+
 import java.io.IOException;
+import java.nio.file.NoSuchFileException;
 import java.util.*;
 
 
@@ -18,7 +22,14 @@ public class BasketSplitter {
      * @throws IOException When loading of configuration JSON file failed.
      * */
     public Map<String, List<String>> split(List<String> items) throws IOException {
-        Basket basket = new Basket(items, this.absolutePathToConfigFile);
+        Basket basket;
+        try {
+            basket = new Basket(items, this.absolutePathToConfigFile);
+        } catch (MismatchedInputException e) {
+            throw new IOException("One of items names belongs to an item that doesn't exist in the config file!");
+        } catch (NoSuchFileException e){
+            throw new IOException("Configuration file doesn't exist!");
+        }
         Map<String, List<String>> solution = new HashMap<>();
 
         // Algorithm takes a method that matches maximal number of items in basket and assign all matching
