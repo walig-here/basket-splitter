@@ -13,13 +13,14 @@ public class Item {
 
     void chooseDeliveryMethod(DeliveryMethod method)
     {
-        // method should be suitable for that instance of item and item could be assigned only once
+        // method should be suitable for that instance of an item and item could be assigned only once
         if (this.currentDeliveryMethod != null || !this.canBeDeliveredWith(method))
             return;
 
         this.currentDeliveryMethod = method;
         this.currentDeliveryMethod.assignItem(this);
 
+        // item is automatically pulled out of basket
         for (DeliveryMethod possibleMethod : this.possibleDeliveryMethods)
             if(!possibleMethod.equals(this.currentDeliveryMethod))
                 possibleMethod.decrementNumberOfMatchingItemsInBasket();

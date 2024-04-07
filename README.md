@@ -47,3 +47,5 @@ A map that would represent the assignment of the order's products between delive
 ## Implementation
 
 The library was implemented with *Java 17* enriched by an external [*Jackson*](https://github.com/FasterXML/jackson) library (for easier parsing of `JSON` files). The class structure of the implemented library is shown in figure XXX.
+
+![](./gfx/splitter.png)
